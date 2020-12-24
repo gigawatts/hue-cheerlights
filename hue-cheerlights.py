@@ -281,38 +281,38 @@ class Converter:
 #---------------------------------------------------------------------------
 
 def set_hue_light(_light, _color_rgb, _brightness):
-	# Convert RGB hexadecimal to XY
-	converter = Converter()
-	color_xy = converter.hex_to_xy(_color_rgb)
-	#print(color_xy)
+    # Convert RGB hexadecimal to XY
+    converter = Converter()
+    color_xy = converter.hex_to_xy(_color_rgb)
+    #print(color_xy)
 
-	payload = json.dumps({"xy":color_xy , "bri":_brightness, "alert":"none", "effect":"none"})
-	#print(payload)
+    payload = json.dumps({"xy":color_xy , "bri":_brightness, "alert":"none", "effect":"none"})
+    #print(payload)
 
-	## Control a single light
-	url = "http://{}/api/{}/lights/{}/state".format(bridge, user,_light)
-	#print(url)
-  
-	headers = { 'content-type': "application/json" }
-	response = requests.request("PUT", url, data=payload, headers=headers, timeout=5)
-	#print(response.text)
+    ## Control a single light
+    url = "http://{}/api/{}/lights/{}/state".format(bridge, user,_light)
+    #print(url)
+
+    headers = { 'content-type': "application/json" }
+    response = requests.request("PUT", url, data=payload, headers=headers, timeout=5)
+    #print(response.text)
 
 def set_hue_group(_group, _color_rgb, _brightness):
-	# Convert RGB hexadecimal to XY
-	converter = Converter()
-	color_xy = converter.hex_to_xy(_color_rgb)
-	#print(color_xy)
+    # Convert RGB hexadecimal to XY
+    converter = Converter()
+    color_xy = converter.hex_to_xy(_color_rgb)
+    #print(color_xy)
 
-	payload = json.dumps({"xy":color_xy , "bri":_brightness, "alert":"none", "effect":"none"})
-	#print(payload)
+    payload = json.dumps({"xy":color_xy , "bri":_brightness, "alert":"none", "effect":"none"})
+    #print(payload)
 
-	## Control a group
-	url = "http://{}/api/{}/groups/{}/action".format(bridge, user, _group)
-	#print(url)
-  
-	headers = { 'content-type': "application/json" }
-	response = requests.request("PUT", url, data=payload, headers=headers, timeout=5)
-	#print(response.text)
+    ## Control a group
+    url = "http://{}/api/{}/groups/{}/action".format(bridge, user, _group)
+    #print(url)
+
+    headers = { 'content-type': "application/json" }
+    response = requests.request("PUT", url, data=payload, headers=headers, timeout=5)
+    #print(response.text)
 
 # Setup various callback functions for mqtt events
 def on_connect(mqttc, obj, flags, rc):
@@ -320,22 +320,22 @@ def on_connect(mqttc, obj, flags, rc):
 
 
 def on_message(mqttc, obj, msg):
-  # Grab the hex color value and strip off the leading '#'
-	print("Message received-> " + msg.topic + " = " + str(msg.payload.decode("utf-8")) )
-	message = str(msg.payload.decode("utf-8"))
-	color_rgb = message.lstrip('#')
-	#print(color_rgb)
-	
-	## Here is where you can set which lights / groups you want to control
-  ## You can call each function (set_hue_light or set_hue_group) several times to set multiple lights / groups
-  brightness = 254  ## Hue light brightness (0 - 254)
-  light = 5         ## The ID of the light you want to control
-  group = 3         ## The ID of the group you want to control
-  
-  set_hue_light(light, color_rgb, brightness)
-  set_hue_light(6, color_rgb, 127)
-	set_hue_group(group, color_rgb, brightness)
-  set_hue_group(4, color_rgb, 88)
+    # Grab the hex color value and strip off the leading '#'
+    print("Message received-> " + msg.topic + " = " + str(msg.payload.decode("utf-8")) )
+    message = str(msg.payload.decode("utf-8"))
+    color_rgb = message.lstrip('#')
+    #print(color_rgb)
+
+    ## Here is where you can set which lights / groups you want to control
+    ## You can call each function (set_hue_light or set_hue_group) several times to set multiple lights / groups
+    brightness = 254  ## Hue light brightness (0 - 254)
+    light = 5         ## The ID of the light you want to control
+    group = 3         ## The ID of the group you want to control
+
+    set_hue_light(light, color_rgb, brightness)
+    set_hue_light(6, color_rgb, 127)
+    set_hue_group(group, color_rgb, brightness)
+    set_hue_group(4, color_rgb, 88)
 
 
 def on_publish(mqttc, obj, mid):
@@ -369,6 +369,6 @@ mqttc.loop_start()
 
 
 while True:
-	## Is there a better way to keep the program running? Probably, but this works. Feel free to open an issue or PR with a better solution!
-  #time.sleep(1.00)
-	pause()
+    ## Is there a better way to keep the program running? Probably, but this works. Feel free to open an issue or PR with a better solution!
+    #time.sleep(1.00)
+    pause()
