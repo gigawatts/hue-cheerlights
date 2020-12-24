@@ -25,3 +25,10 @@ https://www.burgestrand.se/hue-api/api/lights/
 * Set which lights / groups you want to control [here](hue-cheerlights.py#L329)
 
 I am currently just running this from a screen terminal session, but I'll probably build it into a Docker container shortly so it's easier to manage.
+
+
+## Acknowledgements
+
+Thanks to [benknight](https://github.com/benknight) for the fantastic RGB to XY converter https://github.com/benknight/hue-python-rgb-converter
+
+MQTT library and examples from https://github.com/eclipse/paho.mqtt.python
